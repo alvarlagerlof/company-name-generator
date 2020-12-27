@@ -1,0 +1,28 @@
+{
+  "name": "company-name-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrsharpoblunto/foswig.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrsharpoblunto/foswig.js/issues"
+  },
+  "homepage": "https://github.com/mrsharpoblunto/foswig.js#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "foswig": "^3.0.1",
+    "syllable": "^4.1.0",
+    "whois": "^2.13.3"
+  }
+}
