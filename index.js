@@ -15,16 +15,16 @@ const setup = {
   words: [...dictionary],
   randomness: 3,
   constraints: {
-    minLength: 4,
+    minLength: 5,
     maxLength: 10,
     allowDuplicates: true,
   },
-  maxSyllables: 5,
-  waitTime: 100,
-  debug: true,
+  maxSyllables: 10,
+  waitTime: 50,
+  debug: false,
   showFailed: false,
   prefix: "",
-  suffix: "stack",
+  suffix: "",
 };
 
 // Create the Markov chain and specify the order of the chain & input dictionary
