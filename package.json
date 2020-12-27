@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node index.js"
+    "generate": "node --max-old-space-size=4000 index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrsharpoblunto/foswig.js.git"
+    "url": "git+https://github.com/alvarlagerlof/company-name-generator.git"
   },
   "keywords": [],
   "author": "",
