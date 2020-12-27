@@ -21,7 +21,7 @@ const setup = {
   },
   maxSyllables: 5,
   waitTime: 100,
-  debug: false,
+  debug: true,
   showFailed: false,
   prefix: "",
   suffix: "stack",
@@ -52,7 +52,8 @@ async function run() {
 function showWord() {
   return new Promise(async (resolve, reject) => {
     try {
-      const name = prefix + (await chain.generate(setup.constraints)) + suffix;
+      const name =
+        setup.prefix + (await chain.generate(setup.constraints)) + setup.suffix;
 
       if (syllable(name) < setup.maxSyllables && (await isAvailable(name))) {
         console.log(success(name + ".com"));
