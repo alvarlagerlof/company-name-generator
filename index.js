@@ -11,16 +11,17 @@ import angel from "./angel.js";
 import keywords from "./keywords.js";
 
 const setup = {
-	words: [...angel, ...fortune, ...keywords],
-	randomness: 3,
-	constraints: {
-		minLength: 6,
-		maxLength: 8,
-		allowDuplicates: true,
-	},
-	maxSyllables: 4,
-	waitTime: 100,
-	debug: false,
+  words: [...dictionary],
+  randomness: 3,
+  constraints: {
+    minLength: 3,
+    maxLength: 5,
+    allowDuplicates: true,
+  },
+  maxSyllables: 4,
+  waitTime: 100,
+  debug: false,
+  showFailed: false,
 };
 
 // Create the Markov chain and specify the order of the chain & input dictionary
@@ -40,66 +41,66 @@ const success = chalk.hex("00FF00");
 const chain = new Foswig(setup.randomness, setup.words);
 
 async function run() {
-	while (true) {
-		await showWord();
-	}
+  while (true) {
+    await showWord();
+  }
 }
 
 function showWord() {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const name = await chain.generate(setup.constraints);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const name = (await chain.generate(setup.constraints)) + "stack";
 
-			if (syllable(name) < setup.maxSyllables && (await isAvailable(name))) {
-				console.log(success(name + ".com"));
-				resolve();
-			} else {
-				console.log(warning(name + ".com"));
-				reject(new Error("Not fullilling the requirements"));
-			}
-		} catch (e) {
-			reject(e);
-		}
-	}).catch((e) => {
-		if (setup.debug) console.log(error(e));
-	});
+      if (syllable(name) < setup.maxSyllables && (await isAvailable(name))) {
+        console.log(success(name + ".com"));
+        resolve();
+      } else {
+        if (setup.showFailed) console.log(warning(name + ".com"));
+        reject(new Error("Not fullilling the requirements"));
+      }
+    } catch (e) {
+      reject(e);
+    }
+  }).catch((e) => {
+    if (setup.debug) console.log(error(e));
+  });
 }
 
 function isAvailable(name) {
-	return new Promise(async (resolve, reject) => {
-		await new Promise((resolve) => setTimeout(resolve, setup.waitTime));
+  return new Promise(async (resolve, reject) => {
+    await new Promise((resolve) => setTimeout(resolve, setup.waitTime));
 
-		await whois.lookup(name + ".com", function (err, data) {
-			if (setup.debug) console.log(data && data.substring(0, 70));
+    await whois.lookup(name + ".com", function (err, data) {
+      if (setup.debug) console.log(data && data.substring(0, 70));
 
-			if (
-				data &&
-				(data.includes("IP Address Has Reached Rate Limit") ||
-					data.includes("Exceeded max command rate") ||
-					data.includes("Too many queries from your IP"))
-			) {
-				console.log(error("Rate limit exceded"));
-				setTimeout(() => {
-					reject(new Error("Rate limit exceded"));
-				}, 10000);
-			} else if (
-				data &&
-				data.includes(`No match for domain "${name.toUpperCase()}.COM"`)
-			) {
-				resolve(true);
-			} else {
-				reject(new Error("Domain not available"));
-			}
-		});
-	}).catch((e) => {
-		if (setup.debug) console.log(error(e));
-	});
+      if (
+        data &&
+        (data.includes("IP Address Has Reached Rate Limit") ||
+          data.includes("Exceeded max command rate") ||
+          data.includes("Too many queries from your IP"))
+      ) {
+        console.log(error("Rate limit exceded"));
+        setTimeout(() => {
+          reject(new Error("Rate limit exceded"));
+        }, 10000);
+      } else if (
+        data &&
+        data.includes(`No match for domain "${name.toUpperCase()}.COM"`)
+      ) {
+        resolve(true);
+      } else {
+        reject(new Error("Domain not available"));
+      }
+    });
+  }).catch((e) => {
+    if (setup.debug) console.log(error(e));
+  });
 }
 
 process.stdin.on("keypress", (str, key) => {
-	if (key.ctrl && key.name === "c") {
-		process.exit();
-	}
+  if (key.ctrl && key.name === "c") {
+    process.exit();
+  }
 });
 
 run();
