@@ -4,24 +4,27 @@ import chalk from "chalk";
 import readline from "readline";
 import syllable from "syllable";
 
-import dictionary from "./dictionary.js";
-import companies from "./companies.js";
-import fortune from "./fortune.js";
-import angel from "./angel.js";
-import keywords from "./keywords.js";
+import dictionary from "./datasets/dictionary.js";
+import companies from "./datasets/companies.js";
+import fortune from "./datasets/fortune.js";
+import angel from "./datasets/angel.js";
+import keywords from "./datasets/keywords.js";
+import speed from "./datasets/speed.js";
 
 const setup = {
   words: [...dictionary],
   randomness: 3,
   constraints: {
     minLength: 3,
-    maxLength: 5,
+    maxLength: 6,
     allowDuplicates: true,
   },
   maxSyllables: 4,
   waitTime: 100,
   debug: false,
   showFailed: false,
+  prefix: "",
+  suffix: "stack",
 };
 
 // Create the Markov chain and specify the order of the chain & input dictionary
@@ -49,7 +52,7 @@ async function run() {
 function showWord() {
   return new Promise(async (resolve, reject) => {
     try {
-      const name = (await chain.generate(setup.constraints)) + "stack";
+      const name = prefix + (await chain.generate(setup.constraints)) + suffix;
 
       if (syllable(name) < setup.maxSyllables && (await isAvailable(name))) {
         console.log(success(name + ".com"));
