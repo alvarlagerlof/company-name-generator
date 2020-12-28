@@ -18,7 +18,7 @@ const setup = {
     minLength: 5,
     maxLength: 10,
     allowDuplicates: true,
-  },
+  }, 
   maxSyllables: 10,
   waitTime: 50,
   debug: false,
