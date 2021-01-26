@@ -1,5 +1,5 @@
 # Comany name generator
-Name genertor using Markov chains via the Foswig libraray
+Name generator using Markov chains via the Foswig library
 
 ## Running
 Edit the settings object in index.js, then do
