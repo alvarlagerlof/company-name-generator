@@ -22,7 +22,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "foswig": "^3.0.1",
-    "syllable": "^4.1.0",
+    "syllable": "^5.0.0",
     "whois": "^2.13.3"
   }
 }
