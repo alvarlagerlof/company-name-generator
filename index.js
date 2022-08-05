@@ -2,7 +2,7 @@ import Foswig from "foswig";
 import whois from "whois";
 import chalk from "chalk";
 import readline from "readline";
-import syllable from "syllable";
+import { syllable } from "syllable";
 
 import dictionary from "./datasets/dictionary.js";
 import companies from "./datasets/companies.js";
@@ -18,7 +18,7 @@ const setup = {
     minLength: 5,
     maxLength: 10,
     allowDuplicates: true,
-  }, 
+  },
   maxSyllables: 10,
   waitTime: 50,
   debug: false,
